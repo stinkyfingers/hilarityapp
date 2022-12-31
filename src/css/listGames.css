@@ -1,0 +1,25 @@
+div.listGames {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+div.gameSelector {
+    background-color: var(--main-text-color);
+    color: var(--main-accent-color);
+    padding: .2em;
+    margin: .2em;
+    width: 50%;
+    display: inline-block;
+}
+
+div.gameSelector:hover {
+    opacity: .8;
+    cursor: pointer;
+}
+
+@media(max-width: 600px) {
+    div.gameSelector {
+        width: 100%;
+    }
+}

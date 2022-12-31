@@ -1,0 +1,7 @@
+div.header {
+    background-color: var(--main-text-color);
+    color: var(--main-accent-color);
+}
+h1 {
+    margin-top: 0;
+}

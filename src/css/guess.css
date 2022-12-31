@@ -1,0 +1,18 @@
+div.userPlays {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+   
+}
+
+div.response {
+    display: inline-block;
+    padding: 1em;
+    text-align: left;
+    border: 1px solid var(--main-text-color);
+    margin-top: 1em;
+}
+
+div.warning {
+    color: var(--second-main-color);
+}

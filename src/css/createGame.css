@@ -1,0 +1,12 @@
+div.createGame {
+    margin: auto;
+    display: inline-block;
+}
+
+span.label {
+    font-size: 1.4em;    
+}
+
+.createMenuItem>td {
+   text-align: left;
+}

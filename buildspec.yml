@@ -1,0 +1,19 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+  pre_build:
+    commands:
+      - yarn
+  build:
+    commands:
+      - yarn build
+  post_build:
+    commands:
+      - aws s3 sync build s3://hilarityapp.john-shenk.com
+      - aws cloudfront create-invalidation --paths /index.html --distribution-id E3O7U5JK7TX6LG
+artifacts:
+  files:
+    - 'build/*'
+

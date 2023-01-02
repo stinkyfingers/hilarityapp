@@ -1,11 +1,17 @@
 import React from 'react';
-import {Game} from "../lib/types";
+import { Game } from "../lib/types";
 
 import '../css/totals.css';
 
 interface params {
     game: Game;
-}
+};
+
+interface winnerValues {
+    user: string;
+    total: number;
+};
+
 const Totals = (params: params) => {
     const renderTotals = () => {
         const correctGuesses = new Map();
@@ -17,7 +23,7 @@ const Totals = (params: params) => {
                     const cur = guessMap.get(correctUser) || [];
                     cur.push(`${guesser} guessed ${guessedUser}`);
                     guessMap.set(correctUser, cur);
-                    if (correctUser == guessedUser) {
+                    if (correctUser === guessedUser) {
                         const userTotal = correctGuesses.get(guesser) || 0;
                         correctGuesses.set(guesser, userTotal + 1);
                     }
@@ -51,7 +57,7 @@ const Totals = (params: params) => {
 
             )
         })
-        const winners = new Array();
+        const winners: winnerValues[] = [];
         correctGuesses.forEach((total, user) => {
             winners.push({ user, total });
         });

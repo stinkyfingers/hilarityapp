@@ -18,6 +18,7 @@ enum PlayState {
     GuessDo,
     GuessWait,
     Complete,
+    NeedPlayer,
 };
 
 const PlayGame = () => {
@@ -28,6 +29,8 @@ const PlayGame = () => {
     const [playState, setPlayState] = React.useState<PlayState>(PlayState.PlayDo)
     const { gameName } = useParams();
     const navigate = useNavigate();
+    const setErrFn =  ctx.setErr;
+    const setGamingFn =  ctx.setGaming;
     
     const receiveData = (data: string) => {
         setGame(JSON.parse(data))
@@ -38,19 +41,19 @@ const PlayGame = () => {
         getGame(gameName)
             .then((resp) => {
                 if (resp.error) {
-                    ctx.setErr(resp.error)
+                    setErrFn(resp.error)
                     return;
                 }
                 setGame(resp)
             })
-            .catch((err) => ctx.setErr(err))
-    }, [])
+            .catch((err) => setErrFn(err))
+    }, [ctx.user, gameName, setErrFn])
     
     React.useEffect(() => {
         if (!gameName) return;
         const socket = new WebSocket(playUrl(gameName));
         socket.onopen = () => {
-            ctx.setGaming(true);
+            setGamingFn(true);
             setWsReady(true)
         }
         socket.onclose = () => {
@@ -61,14 +64,18 @@ const PlayGame = () => {
         }
         ws.current = socket;
         return () => {
-            ctx.setGaming(false);
+            setGamingFn(false);
             // socket.close();
         }
-    }, []);
+    }, [gameName, setGamingFn]);
     
     // playState 
     React.useEffect(() => {
-        if (!wsReady || !game || !game.currentRound || !ctx.user) return
+        if (!wsReady || !game || !game.currentRound || !ctx.user) return;
+        if (Object.keys(game.users).length < 2) {
+            setPlayState(PlayState.NeedPlayer);
+            return;
+        }
         if (game.pastRounds && game.pastRounds.length === game.totalRounds) {
             setPlayState(PlayState.Complete)
             return;
@@ -133,6 +140,7 @@ const PlayGame = () => {
         )
     }
     if (!game || !ctx.user) return null;
+    if (playState === PlayState.NeedPlayer) return <div>Waiting for more players...</div>;
     return (
         <div>
             {game && game.currentRound &&

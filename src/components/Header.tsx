@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from "react-router-dom";
 import User from './User';
 
 import '../css/header.css';
@@ -9,8 +8,8 @@ const Header = () => {
         <div className='header'>
             <h1>Hilarity</h1>
             <div className='links'>
-                <Link to="/list"><button>List Games</button></Link>
-                <Link to="/create"><button>Create Game</button></Link>
+                <a href="/list"><button>List Games</button></a>
+                <a href="/create"><button>Create Game</button></a>
             </div>
             <User />
         </div>

@@ -1,9 +1,17 @@
 export const API = () => {
-    return 'https://hilarityapi-production.up.railway.app' 
-        || 'http://localhost:8888'; // TODO dev, local, prod API 
-}
+    switch (process.env.REACT_APP_ENV) {
+        case 'dev':
+            return 'http://localhost:8888'
+        default:
+            return 'https://hilarityapi-production.up.railway.app'
+    }
+};
 
 export const WS = () => {
-    return 'wss://hilarityapi-production.up.railway.app' 
-        || 'ws://localhost:8888'; // TODO dev, local, prod API 
-}
+    switch (process.env.REACT_APP_ENV) {
+        case 'dev':
+            return 'ws://localhost:8888'
+        default:
+            return 'wss://hilarityapi-production.up.railway.app'
+    }
+};

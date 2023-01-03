@@ -44,21 +44,42 @@ const router = createBrowserRouter([
     ]}
 ]);
 
+const FallbackElement = () => (
+    <div>NOT FOUND</div>
+);
+
 function App() {
   const [err, setErr] = React.useState<string>();
   const [user, setUser] = React.useState<User>();
   const [gaming, setGaming] = React.useState<boolean>(false);
 
   return (
-    <Context.Provider value={{ setErr, err, setUser, user, gaming, setGaming }}>
+    <Context.Provider value={{ setUser, user, gaming, setGaming, err, setErr }}>
       <div className="App">
         { err && <Error msg={err} /> }
         <React.StrictMode>
-          <RouterProvider router={router} />
+          <RouterProvider router={router} fallbackElement={<FallbackElement />}/>
         </React.StrictMode>
       </div>
     </Context.Provider>
   );
 }
+
+// function App() {
+//   const [err, setErr] = React.useState<string>();
+//   const [user, setUser] = React.useState<User>();
+//   const [gaming, setGaming] = React.useState<boolean>(false);
+//
+//   return (
+//       <Context.Provider value={{ setUser, user, gaming, setGaming }}>
+//         <div className="App">
+//           <React.StrictMode>
+//               <Header />
+//               <ListGames />
+//           </React.StrictMode>
+//         </div>
+//       </Context.Provider>
+//   );
+// }
 
 export default App;

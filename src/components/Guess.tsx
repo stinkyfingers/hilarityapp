@@ -1,6 +1,6 @@
 import React from 'react';
-import { Plays, Play } from '../lib/types';
-import { Context } from "../Context";
+import { Plays } from '../lib/types';
+import { Context } from '../Context';
 
 import '../css/guess.css';
 
@@ -24,7 +24,7 @@ const reverseMap = (guesses: Object): Object => {
 const shuffle = (array: Array<string>): Array<string> => {
     let currentIndex = array.length, randomIndex;
     // While there remain elements to shuffle.
-    while (currentIndex != 0) {
+    while (currentIndex !== 0) {
 
         // Pick a remaining element.
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -38,7 +38,7 @@ const shuffle = (array: Array<string>): Array<string> => {
 
 const Guess = (params: params) => {
     const ctx = React.useContext(Context);
-    const [plays, setPlays] = React.useState<Plays>(params.answers);
+    const plays = params.answers;
     const [guesses, setGuesses] = React.useState<Object>({});
     const [options, setOptions] = React.useState<Array<string>>([]);
     const [disabled, setDisabled] = React.useState<string>('');
@@ -65,7 +65,7 @@ const Guess = (params: params) => {
             .filter((user) => {
                 return ctx.user && user !== ctx.user.name;
             })));
-    }, [params])
+    }, [params, ctx.user, plays])
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>, correctOption: string) => {
         ctx.setErr(null);
@@ -91,6 +91,7 @@ const Guess = (params: params) => {
 
     const renderPlays = () => {
         const opts = options.map((option) => {
+            if (!plays[option] || !plays[option].answers) return null;
             return <div className='response' key={`response-${option}`}>
                 { renderOptions(option) }
                 <ol>

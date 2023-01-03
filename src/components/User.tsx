@@ -5,15 +5,17 @@ import { getObject, setObject } from '../lib/storage';
 const User = () => {
     const ctx = React.useContext(Context);
     const [name, setName] = React.useState<string>('');
-    
+    const setErrFn = ctx.setErr;
+    const setUserFn = ctx.setUser;
+
     React.useEffect(() => {
         getObject('user')
             .then((resp) => {
                 setName(resp.name);
-                ctx.setUser({ name: resp.name });
+                setUserFn({ name: resp.name });
             })
-            .catch((err) => ctx.setErr(JSON.stringify(err)))
-    }, [ctx.setErr, ctx.setUser])
+            .catch((err) => setErrFn(JSON.stringify(err)))
+    }, [setUserFn, setErrFn])
     
     const setUser = () => {
         ctx.setUser({ name });

@@ -1,7 +1,7 @@
-import React, {ChangeEventHandler} from 'react';
+import React from 'react';
 import { createGame } from '../lib/api';
-import {Context} from "../Context";
-import {useNavigate} from "react-router-dom";
+import { Context } from '../Context';
+import { useNavigate } from 'react-router-dom';
 
 import '../css/createGame.css';
 

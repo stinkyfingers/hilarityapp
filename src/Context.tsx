@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, Game } from './lib/types';
+import { User } from './lib/types';
 
 interface context {
     user?: User;

@@ -8,10 +8,11 @@ import ListGames from './components/ListGames';
 import CreateGame from './components/CreateGame';
 import PlayGame from './components/PlayGame';
 import './App.css';
-import Header from "./components/Header";
+import Header from './components/Header';
 import Error from './components/Error';
 import { Context } from "./Context";
 import { User } from './lib/types';
+import Instructions from './components/Instructions';
 
 const Layout = () => {
   return (
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <div>Hello world!</div>,
+        element: <Instructions />,
       },
       {
         path: "/list",

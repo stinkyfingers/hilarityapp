@@ -1,0 +1,10 @@
+div.instructions {
+    width: 50%;
+    margin: auto;
+}
+
+@media (max-width: 600px) {
+    div.instructions {
+        width: 90%;
+    }
+}

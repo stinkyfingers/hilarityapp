@@ -105,6 +105,8 @@ const Guess = (params: params) => {
     };
     return (
         <div className='guess'>
+            <h5 className='question'>List your Top 3 {params.question}:</h5>
+
             <div className='instructions'>
                 Select each player that you think supplied each response set:
             </div>

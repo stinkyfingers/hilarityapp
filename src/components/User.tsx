@@ -21,7 +21,7 @@ const User = () => {
         ctx.setUser({ name });
         setObject('user', { name })
             .catch((err) => ctx.setErr(JSON.stringify(err)))
-    };
+    }; 
 
     return <div>
         <input

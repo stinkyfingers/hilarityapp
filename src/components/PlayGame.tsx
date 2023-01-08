@@ -1,11 +1,12 @@
 import React from 'react';
-import { useNavigate, useParams } from "react-router-dom";
-import { Context } from "../Context";
+import { useNavigate, useParams } from 'react-router-dom';
+import { Context } from '../Context';
 import { getGame, leaveGame } from '../lib/api';
 import { Game } from '../lib/types';
-import Play from "./Play";
+import Play from './Play';
 import Guess from './Guess'
 import Totals from './Totals';
+import RoundTotals from './RoundTotals';
 import { WS } from "../Config";
 
 import '../css/playGame.css';
@@ -17,6 +18,7 @@ enum PlayState {
     PlayWait,
     GuessDo,
     GuessWait,
+    RoundComplete,
     Complete,
     NeedPlayer,
 };
@@ -81,7 +83,11 @@ const PlayGame = () => {
             return;
         }
         if (!game.currentRound.plays[ctx.user.name]) {
-            setPlayState(PlayState.PlayDo);
+            if (game.pastRounds) {
+                setPlayState(PlayState.RoundComplete);
+            } else {
+                setPlayState(PlayState.PlayDo);
+            }
             return;
         }
         if (Object.keys(game.currentRound.plays).length < Object.keys(game.users).length) {
@@ -147,7 +153,6 @@ const PlayGame = () => {
               <div>
                 <button onClick={ handleQuitGame }>Quit Game</button>
 
-                  <h5 className='question'>List your Top 3 {game.currentRound.question}:</h5>
                   {{
                       [PlayState.PlayDo.toString()]: 
                           <Play
@@ -165,6 +170,8 @@ const PlayGame = () => {
                           />,
                       [PlayState.GuessWait.toString()]:
                           <div>Waiting for other players to guess</div>,
+                      [PlayState.RoundComplete.toString()]:
+                            <RoundTotals game={game} onComplete={() => setPlayState(PlayState.PlayDo)}/>,
                       [PlayState.Complete.toString()]:
                         <Totals game={game} />
                   }[playState.toString()]}
